@@ -7,8 +7,8 @@
     "node": ">=18"
   },
   "scripts": {
-    "dev": "node server.js",
-    "start": "node server.js",
-    "ui": "node server.js"
+    "dev": "node local-server.js",
+    "start": "node local-server.js",
+    "ui": "node local-server.js"
   }
 }
