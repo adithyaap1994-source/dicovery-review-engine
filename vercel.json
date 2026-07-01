@@ -1,6 +1,13 @@
 {
   "version": 2,
   "functions": {
+    "api/index.js": {
+      "maxDuration": 60,
+      "includeFiles": [
+        "web/**",
+        "src/engine.js"
+      ]
+    },
     "api/app-store.js": {
       "maxDuration": 60
     },
@@ -16,8 +23,8 @@
   },
   "rewrites": [
     {
-      "source": "/",
-      "destination": "/web/index.html"
+      "source": "/:path*",
+      "destination": "/api/index.js"
     }
   ]
 }
