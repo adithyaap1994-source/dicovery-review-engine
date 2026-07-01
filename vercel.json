@@ -1,6 +1,10 @@
 {
   "version": 2,
   "functions": {
+    "server.js": {
+      "maxDuration": 60,
+      "includeFiles": "web/**"
+    },
     "api/index.js": {
       "maxDuration": 60,
       "includeFiles": "web/**"

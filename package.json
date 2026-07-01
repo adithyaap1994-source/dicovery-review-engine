@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "main": "server.js",
   "engines": {
     "node": ">=18"
   },
   "scripts": {
     "dev": "node local-server.js",
-    "start": "node local-server.js",
     "ui": "node local-server.js"
   }
 }
