@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MvpRule",
+  "type": "object",
+  "required": ["painPoint", "productRule", "aiPromptRule", "uiControl", "successMetric", "feedbackEvent"],
+  "properties": {
+    "painPoint": { "type": "string" },
+    "productRule": { "type": "string" },
+    "aiPromptRule": { "type": "string" },
+    "uiControl": { "type": "string" },
+    "successMetric": { "type": "string" },
+    "feedbackEvent": { "type": "string" }
+  }
+}

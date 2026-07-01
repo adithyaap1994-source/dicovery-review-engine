@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AnalyzedFeedback",
+  "type": "object",
+  "required": ["id", "source", "text", "theme", "painPoint", "userIntent", "segment", "mvpRule"],
+  "properties": {
+    "id": { "type": "string" },
+    "source": { "type": "string" },
+    "text": { "type": "string" },
+    "theme": { "type": "string" },
+    "painPoint": { "type": "string" },
+    "userIntent": { "type": "string" },
+    "segment": { "type": "string" },
+    "mvpRule": { "type": "string" }
+  }
+}

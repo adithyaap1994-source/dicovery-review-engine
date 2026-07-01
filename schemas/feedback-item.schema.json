@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FeedbackItem",
+  "type": "object",
+  "required": ["id", "source", "text", "createdAt"],
+  "properties": {
+    "id": { "type": "string" },
+    "source": {
+      "type": "string",
+      "enum": ["app_store", "play_store", "reddit", "community_forum", "social", "mvp_feedback"]
+    },
+    "text": { "type": "string" },
+    "rating": { "type": ["number", "null"] },
+    "url": { "type": "string" },
+    "createdAt": { "type": "string" }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "version": 2,
+  "functions": {
+    "api/app-store.js": {
+      "maxDuration": 60
+    },
+    "api/apify-dataset.js": {
+      "maxDuration": 60
+    },
+    "api/apify-run.js": {
+      "maxDuration": 60
+    },
+    "api/reddit.js": {
+      "maxDuration": 60
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/web/index.html"
+    }
+  ]
+}
