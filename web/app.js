@@ -1,4 +1,4 @@
-import { analyzeFeedback, answerCustomQuestion, buildDiscoveryFramework } from "../src/engine.js";
+import { analyzeFeedback, answerCustomQuestion, buildDiscoveryFramework } from "./engine.js";
 
 const state = {
   search: "",
