@@ -5,6 +5,8 @@ const state = {
   source: "all",
   showEvidence: false,
   customQuestion: "",
+  isFetching: false,
+  isAnalyzing: false,
   feedbackItems: [],
   analysis: analyzeFeedback([])
 };
@@ -104,7 +106,10 @@ function wireEvents() {
 }
 
 async function fetchAllReviews() {
-  els.fetchAllButton.disabled = true;
+  state.isFetching = true;
+  state.isAnalyzing = false;
+  state.showEvidence = false;
+  render();
   renderStatus("Fetching reviews", "Importing Apify dataset and Apple public feed together...");
 
   try {
@@ -122,10 +127,16 @@ async function fetchAllReviews() {
     const fetchedItems = successful.flatMap((result) => result.items);
     const existingIds = new Set(state.feedbackItems.map((item) => item.id));
     const newItems = dedupeById(fetchedItems).filter((item) => !existingIds.has(item.id));
+    state.isFetching = false;
+    state.isAnalyzing = true;
+    render();
+    await waitForPaint();
+
     state.feedbackItems = [...newItems, ...state.feedbackItems];
     state.analysis = analyzeFeedback(state.feedbackItems);
     state.source = "all";
     state.showEvidence = false;
+    state.isAnalyzing = false;
     renderStatus(
       "Reviews imported",
       `${newItems.length} new reviews loaded from ${successful.length} source${successful.length === 1 ? "" : "s"}${
@@ -134,9 +145,10 @@ async function fetchAllReviews() {
     );
     render();
   } catch (error) {
+    state.isFetching = false;
+    state.isAnalyzing = false;
     renderStatus("Fetch failed", error.message);
-  } finally {
-    els.fetchAllButton.disabled = false;
+    render();
   }
 }
 
@@ -158,7 +170,22 @@ async function fetchReviewEndpoint(endpoint, label) {
 function render() {
   const filteredAnalysis = getFilteredAnalysis();
   const { analyzedItems, summary } = filteredAnalysis;
+  const hasReviews = state.feedbackItems.length > 0;
+  const isBusy = state.isFetching || state.isAnalyzing;
 
+  document.body.classList.toggle("has-no-reviews", !hasReviews);
+  document.body.classList.toggle("is-fetching", state.isFetching);
+  document.body.classList.toggle("is-calculating", state.isAnalyzing);
+  els.fetchAllButton.disabled = isBusy;
+  els.fetchAllButton.classList.toggle("needs-fetch", !hasReviews && !isBusy);
+  els.fetchAllButton.textContent = state.isFetching
+    ? "Fetching reviews..."
+    : state.isAnalyzing
+      ? "Calculating insights..."
+      : hasReviews
+        ? "Refresh Reviews"
+        : "Fetch All Reviews";
+  els.insightPanel.setAttribute("aria-busy", String(isBusy));
   renderPipelineCounts();
   els.visibleCount.textContent = `${analyzedItems.length} matching reviews`;
   els.evidenceSection.classList.toggle("is-hidden", !state.showEvidence);
@@ -398,6 +425,12 @@ async function copyText(value) {
   textarea.select();
   document.execCommand("copy");
   textarea.remove();
+}
+
+function waitForPaint() {
+  return new Promise((resolve) => {
+    requestAnimationFrame(() => requestAnimationFrame(resolve));
+  });
 }
 
 function escapeHtml(value) {

@@ -228,6 +228,18 @@ h1 {
   color: var(--text-accent);
 }
 
+.fetch-btn.primary-fetch.needs-fetch {
+  min-height: 42px;
+  padding: 0 20px;
+  border-color: rgba(125, 245, 167, 0.86);
+  background: linear-gradient(135deg, #1db954, #58f08f);
+  color: #021108;
+  box-shadow:
+    0 0 0 1px rgba(125, 245, 167, 0.2),
+    0 14px 32px rgba(29, 185, 84, 0.34);
+  transform: translateY(-1px);
+}
+
 .fetch-btn.primary-fetch:hover {
   background: var(--fill-accent);
   color: var(--on-accent);
@@ -236,6 +248,53 @@ h1 {
 .fetch-btn:disabled {
   cursor: wait;
   opacity: 0.65;
+}
+
+.has-no-reviews .filter-strip,
+.has-no-reviews .discovery-workspace,
+.has-no-reviews .review-section,
+.is-fetching .filter-strip,
+.is-fetching .discovery-workspace,
+.is-fetching .review-section,
+.is-calculating .filter-strip,
+.is-calculating .discovery-workspace,
+.is-calculating .review-section {
+  opacity: 0.46;
+  filter: grayscale(0.72);
+  pointer-events: none;
+}
+
+.has-no-reviews .discovery-workspace,
+.is-fetching .discovery-workspace,
+.is-calculating .discovery-workspace {
+  position: relative;
+}
+
+.has-no-reviews .discovery-workspace::after,
+.is-fetching .discovery-workspace::after,
+.is-calculating .discovery-workspace::after {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  border: 0.5px solid rgba(125, 245, 167, 0.22);
+  border-radius: 14px;
+  background: rgba(2, 6, 4, 0.38);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+  pointer-events: none;
+  content: "Fetch reviews to unlock AI analysis";
+}
+
+.is-fetching .discovery-workspace::after {
+  content: "Fetching latest reviews from the pipeline...";
+}
+
+.is-calculating .discovery-workspace::after {
+  content: "Calculating discovery insights from reviews...";
 }
 
 .filter-strip {
